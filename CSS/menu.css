@@ -1,0 +1,51 @@
+.body{
+    background-color: #1f1f1f; 
+    padding-top: 100px;
+    /* height: 110vh; */
+
+}
+.jumbotron{
+    position: fixed;
+    text-align: center;
+    background:  rgb(88, 141, 255); 
+    padding: 18px;
+    top: 0;
+    left: 0;
+    width: 100vw;
+
+    
+}
+.menu{
+    background-color: #f2f2f2;
+    background-color: white;
+    border: solid rgb(88, 141, 255) 3px;
+    border-radius: 30px;
+    block-size: auto;
+    padding: 30px;
+}
+.header{
+    text-align: left;
+    padding: 10px;
+}
+.line{
+    border-bottom: solid  rgb(88, 141, 255) 5px;
+}
+.title{
+    color: #f2f2f2;
+}
+.undertitle{
+    color: white;
+}
+ul li span{
+    float: right;
+}
+
+footer {
+    text-align: center;
+    padding: 3px;
+    background-color: rgb(88, 141, 255);
+    color: white;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
