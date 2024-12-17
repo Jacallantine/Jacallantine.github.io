@@ -1,0 +1,119 @@
+button:hover{
+    background-color: white;
+    color: var (--button-bg-color);
+    transition: var(--o-transition-duration);
+    transform: translateY(0px);
+    cursor: pointer;
+}
+
+#mapDiv{
+    grid-row: 2/3;
+    grid-column: 5/7;
+    justify-self:center ;
+    align-self: center;
+
+   
+}
+
+#map{
+    font-style: italic;
+    font-size: 32px;
+    display: inline-block;
+    cursor: pointer;
+}
+#arrow, #advancedArrow{
+    display: inline-block;
+    background-color: transparent;
+    grid-row: 2/3;
+    grid-column: 5/7;
+    justify-self:right ;
+    align-self: center;
+    padding:0px 10px;
+}
+
+#dropdown{
+    grid-row:3/5;
+    grid-column: 5/7;
+   
+
+}
+
+.dropdown
+{
+z-index: -1;
+opacity: 0;
+background-color: white;
+color: black;
+transition: var(--o-transition-duration);
+width: 100%;
+
+}
+.hide{
+    transition: var(--o-transition-duration);
+   /* opacity: 0; */
+   height: 0%;
+}
+
+
+#HPForm{
+    grid-row:3/8;
+    grid-column: 5/7;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+    z-index: 1;
+    transition: var(--o-transition-duration);
+
+    & h3{
+        font-size: 32px;
+        font-style: italic;
+        margin: auto;
+    }
+    & input{
+        width: 100%;
+        height: 20%;
+        margin: 20px 0px;
+        font-size: 18px;
+     padding-left:10%;
+
+        &::placeholder{
+            font-size: 18px;
+        }
+
+    }
+    #submit{
+            
+    }
+}
+
+
+
+
+
+ .show{
+    transition: var(--o-transition-duration);
+    opacity: 1;
+    z-index: 10;
+   
+ }
+
+
+
+.arrowClicked{
+   transform: rotate(90deg);
+}
+ .arrowClicked:hover{
+    transform: rotate(90deg);
+ }
+
+
+ .blockButton{
+    display: block;
+    width: 100%;
+ }
+
+
+
+
+  
