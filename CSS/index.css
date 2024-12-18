@@ -1,0 +1,209 @@
+body{ 
+    background-color: #1f1f1f;
+    display: grid;
+    grid-template-columns: repeat(10,1fr);
+    grid-template-rows: repeat(10,1fr);
+    width: 100vw;
+    height: 100vh;
+    --main-bg-color: #1f1f1f;
+    --button-bg-color: #0c63e7;
+    --o-transition-duration: 0.7s;
+    --o-transform:translatey(-4px);
+    font-family: sans-serif;
+    color: white;
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+
+
+.navBar{
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 75px;
+    justify-content: center;
+    /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
+
+    & button{
+        color: white;
+        background-color: var(--button-bg-color);
+        transition: var(--o-transition-duration);
+        font-size: 20px;
+        border:none;
+        padding: 15px 35px;
+
+        &:hover{
+            background-color: white;
+    color: var(--button-bg-color);
+    transition: var(--o-transition-duration);
+    /* transform: var(--o-transform); */
+    cursor: pointer;
+        }
+    }
+   
+}
+
+
+
+
+
+
+ button{
+    
+    color: white;
+    background-color: var(--button-bg-color);
+    transition: var(--o-transition-duration);
+    font-size: 20px;
+    border:none;
+    padding: 15px 35px;
+}
+
+button:hover{
+    background-color: white;
+    color: var(--button-bg-color);
+    transition: var(--o-transition-duration);
+    transform: var(--o-transform);
+    cursor: pointer;
+}
+
+#title{
+    font-size: 54px;
+    font-style: italic;
+    grid-row: 4/5;
+    grid-column: 4/8;
+    text-align: center;
+    align-self: center;
+}
+
+#searchName{
+    grid-row: 5/6;
+    grid-column: 4/8;
+    height: 50px;
+    width: 75%;
+    font-size: 25px;
+
+    text-align: center;
+    align-self: center;
+    justify-self: center;
+
+
+}
+
+#searchName input{
+  padding-left: 25px;
+}
+
+#addData{
+    grid-row: 6/7;
+    grid-column: 5/7;
+    align-self: center;
+    justify-self:center ;
+}
+
+#twitter, #discord{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    bottom: 0;
+    right: 50%;
+    height: 50px;
+    position: fixed;
+    padding: 0;
+    background-color: rgb(255, 255, 255);
+    border-top-left-radius: 4px;
+   transform: translateY(0);
+    width: 100px;
+    
+
+}
+
+#twitter:hover, #discord:hover{
+  background-color:rgb(185, 185, 185) ;
+  transition: var(--o-transition-duration);
+}
+#discord{
+    left: 50%;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 4px;
+ 
+}
+
+
+#twitter img, #discord img{
+    height: 25px;
+}
+
+
+
+.navBar button{
+    transform: translateY(0);
+    transition: 1s;
+    position: relative;
+    overflow: hidden;
+    font-size: 20px;
+
+}
+
+.navBar button:hover{
+    background-color: var(--button-bg-color);
+}
+
+.navBar button span{
+    position: relative;
+    z-index: 10;
+    justify-content: center;
+    align-items: center;
+    padding:5px;
+
+}
+#contactButton{
+    border-bottom-right-radius:4px ;
+}
+#homeButton{
+    border-bottom-left-radius:4px ;
+}
+
+#contactButton::before, #homeButton::before, #signIn::before{
+    content: '';
+    position: absolute;
+    height: 100%; 
+    top: 100%; 
+    left: 0;
+    right: 0;
+    background-color: white;
+    z-index: 2;
+    transition: var(--o-transition-duration);
+
+}
+
+#homeButton:hover::before, #contactButton:hover::before, #signIn:hover::before{
+    transform: translateY(-100%);
+    transition: var(--o-transition-duration);
+}
+
+.hide{
+    display: none;
+    transition: var(--o-transition-duration);
+    opacity: 0;
+   z-index: -10;
+  
+  /* display: none !important; */
+  pointer-events: none;
+}
+
+.show{
+    transition: var(--o-transition-duration);
+    opacity: 1 !important;
+    z-index: 10;
+    pointer-events: auto;
+    display: block;
+    /* display: block; */
+   
+ }

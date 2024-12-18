@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In</title>
+    <link rel="stylesheet" href="../CSS/index.css">
+    <link rel="stylesheet" href="../CSS/signIn.css">
+    
+</head>
+<body>
+
+    <div class = 'navBar'>
+        <button id="homeButton" onclick="window.location.href='index.html'"><span>Home</span></button>
+        <button id ="signIn" onclick="window.location.href='signIn.html'"><span>Sign In</span></button>
+        <button id="contactButton" onclick="window.location.href='https://x.com/NykoCOD'"><span>Contact</span></button>
+</div>
+
+<button id = 'twitter' onclick = "window.location.href='https://x.com/NykoCOD'"><img src="../PHOTO/Twitter-X-Logo.png" alt=""></button>
+<button id = 'discord' onclick = "window.location.href='https://discordapp.com/user/nyko4479'"><img src="../PHOTO/Discord.png" alt=""></button>
+
+
+        <div class = "container">
+
+            <div class = "SignInContainer">
+    <form onsubmit="return false" id = "SignInForm">
+    
+    <h1>Welcome Back!</h1>
+    <input type="text" name="" id="UserName" placeholder="USERNAME">
+    <input type="text" name="" id="Password" placeholder="PASSWORD">
+    <button id = "SignInButton">Sign In</button>
+    </form>
+</div>
+
+    <div class = 'CreateAccount'>
+
+        <div class = "top">
+        <h1>Create Account</h1>
+
+        <button id = "ShowCreate">Click here</button>
+        </div>
+        <form onsubmit="return false" id = "DropDownCreate">
+            <input type="text" name="" id="UserNameC" placeholder="USERNAME">
+            <input type="password" name="" id="PasswordC" placeholder="PASSWORD">
+            <button id = "CreateAccountButton">Create</button>
+
+        
+        </form>
+
+    </div>
+
+
+</div>
+
+
+<script
+src="https://code.jquery.com/jquery-3.7.1.js"
+integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+crossorigin="anonymous"></script>
+  
+
+
+<script src="../JS/signIn.js"></script>
+
+</body>
+</html>
