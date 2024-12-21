@@ -1,8 +1,9 @@
 body{ 
     background-color: #1f1f1f;
-    display: grid;
-    grid-template-columns: repeat(10,1fr);
-    grid-template-rows: repeat(10,1fr);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
     width: 100vw;
     height: 100vh;
     --main-bg-color: #1f1f1f;
@@ -12,6 +13,16 @@ body{
     font-family: sans-serif;
     color: white;
 }
+.container {
+    display: flex;
+    row-gap: 25px;
+    flex-direction: column;
+    align-self: center;
+    justify-self: center;
+}
+
+
+
 * {
     margin: 0;
     padding: 0;
@@ -76,17 +87,13 @@ button:hover{
 #title{
     font-size: 54px;
     font-style: italic;
-    grid-row: 4/5;
-    grid-column: 4/8;
     text-align: center;
     align-self: center;
 }
 
 #searchName{
-    grid-row: 5/6;
-    grid-column: 4/8;
     height: 50px;
-    width: 75%;
+    width: 100%;
     font-size: 25px;
 
     text-align: center;
@@ -147,7 +154,8 @@ button:hover{
     transition: 1s;
     position: relative;
     overflow: hidden;
-    font-size: 20px;
+    height: clamp(10vh, 1vh, 15vh);
+    padding: clamp(5px,1px, 15px) clamp(25px, 1px, 45px);
 
 }
 
@@ -156,11 +164,14 @@ button:hover{
 }
 
 .navBar button span{
+    display: block;
     position: relative;
     z-index: 10;
     justify-content: center;
     align-items: center;
-    padding:5px;
+    padding: 0;
+ 
+    font-size: clamp(10px, 2vw,20px);
 
 }
 #contactButton{
@@ -178,6 +189,7 @@ button:hover{
     left: 0;
     right: 0;
     background-color: white;
+    color:var(--button-bg-color) ;
     z-index: 2;
     transition: var(--o-transition-duration);
 
@@ -207,3 +219,34 @@ button:hover{
     /* display: block; */
    
  }
+
+
+
+ @media (max-width: 1000px)
+{
+    #title {
+        font-size: 3em;
+    }
+}
+
+ @media (max-width: 800px)
+{
+
+
+   #title {
+   font-size: 2.5em;
+   grid-column: 3/9;
+   }
+
+   #searchName{
+    grid-column: 3/9;
+   }
+
+   /* button {
+    padding: 15px 30px;
+   } */
+
+
+
+}
+

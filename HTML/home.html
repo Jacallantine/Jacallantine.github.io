@@ -11,21 +11,42 @@
 <body>
     <div class = 'navBar'>
         <button id="homeButton" onclick="window.location.href='../index.html'"><span>Home</span></button>
-        <button id ="signIn" onclick="window.location.href='signIn.html'"><span>Sign In</span></button>
+        <button id ="signIn" onclick="window.location.href='signIn.html'"><span id = "signInSpan">Sign In</span></button>
         <button id="contactButton" onclick="window.location.href='https://x.com/NykoCOD'"><span>Contact</span></button>
 </div>
 
 <button id = 'twitter' onclick = "window.location.href='https://x.com/NykoCOD'"><img src="../PHOTO/Twitter-X-Logo.png" alt=""></button>
 <button id = 'discord' onclick = "window.location.href='https://discordapp.com/user/nyko4479'"><img src="../PHOTO/Discord.png" alt=""></button>
-    <div class="container" id = "c1">
-        <h1>Name</h1>
-
-    </div>
+   
   
 
+<h1 id = "Name">Name</h1>
+    <div class="wrapper">
+
+   
+    <div class="container" id="c5">
+        <button id ="createTeam">Create Team</button>
+        <form onsubmit="return false" id="teamForm">
+            <input type="text" name="" id="teamName" placeholder="Team Name" required>
+            <input type="text" name="" id="player1" placeholder="Player 1 Name (Optional)">
+            <input type="text" name="" id="placyer1Acti" placeholder="Activision Id (Optional)" >
+
+            <input type="text" name="" id="player2" placeholder="Player 2 Name (Optional)">
+            <input type="text" name="" id="placyer2Acti" placeholder="Activision Id (Optional)" >
+
+            <input type="text" name="" id="player3" placeholder="Player 3 Name (Optional)">
+            <input type="text" name="" id="placyer3Acti" placeholder="Activision Id (Optional)" >
+
+            <input type="text" name="" id="player4" placeholder="Player 4 Name (Optional)">
+            <input type="text" name="" id="placyer4Acti" placeholder="Activision Id (Optional)" >
+            <button id ="submitTeam">SUBMIT</button>
+        </form>
+    </div>
 
     <div class="container" id = "c2">
+    
         <div class = "column">
+            
             <div class = "header-row">
                 <h2 id = "teams">TEAMS</h2>
                 <button id = "TeamArrow">></button>
@@ -35,6 +56,8 @@
 
         <div class="container" id = "c3">
            <ul>
+            <li> <a href="./teamStats.html">Nyko Team</a></li>
+            <li> <a href="./teamStats.html">Nyko Team</a></li>
             <li> <a href="./teamStats.html">Nyko Team</a></li>
            </ul>
            
@@ -60,24 +83,6 @@
 
     
     </div>
-    <div class="container" id="c5">
-        <button id ="createTeam">Create Team</button>
-        <form onsubmit="return false" id="teamForm">
-            <input type="text" name="" id="teamName" placeholder="Team Name" required>
-            <input type="text" name="" id="player1" placeholder="Player 1 Name (Optional)">
-            <input type="text" name="" id="placyer1Acti" placeholder="Activision Id (Optional)" >
-
-            <input type="text" name="" id="player2" placeholder="Player 2 Name (Optional)">
-            <input type="text" name="" id="placyer2Acti" placeholder="Activision Id (Optional)" >
-
-            <input type="text" name="" id="player3" placeholder="Player 3 Name (Optional)">
-            <input type="text" name="" id="placyer3Acti" placeholder="Activision Id (Optional)" >
-
-            <input type="text" name="" id="player4" placeholder="Player 4 Name (Optional)">
-            <input type="text" name="" id="placyer4Acti" placeholder="Activision Id (Optional)" >
-            <button id ="submitTeam">SUBMIT</button>
-        </form>
-    </div>
 
     <div class="container" id="c6">
         <button id ='createPlayer'>Create Player</button>
@@ -91,12 +96,14 @@
     </div>
     <button id = "addData">Add Data</button>
 
-    
+</div>
 
     <script
     src="https://code.jquery.com/jquery-3.7.1.js"
     integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
     crossorigin="anonymous"></script>
+
+    <script src="../JS/jquery.js"></script>
 
     <script src="../JS/home.js"></script>
 </body>
