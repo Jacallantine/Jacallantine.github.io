@@ -48,7 +48,7 @@ body{
         transition: var(--o-transition-duration);
         font-size: 20px;
         border:none;
-        padding: 15px 35px;
+        /* padding: 15px 35px; */
 
         &:hover{
             background-color: white;
@@ -171,7 +171,7 @@ button:hover{
     align-items: center;
     padding: 0;
  
-    font-size: clamp(10px, 2vw,20px);
+    font-size: clamp(16px, 2vw,24px);
 
 }
 #contactButton{
@@ -245,7 +245,6 @@ button:hover{
    /* button {
     padding: 15px 30px;
    } */
-
 
 
 }

@@ -69,6 +69,7 @@ a{
 #c2{
     margin-top: 50px;
     flex-direction: row;
+    width: 50vw;
     height: 100%;
     column-gap: clamp(5px, 1vw, 8px);
 
@@ -117,6 +118,7 @@ a{
     height: 10vh; */
     /* transform: translate(50%, 50%); */
   margin: 5% 0 0 0;
+  width: 25vw;
   height: 100%;
   justify-content: left;
  
@@ -181,5 +183,14 @@ a{
     transform: rotate(90deg);
 }
 
+@media (max-width: 800px)
+{
+    body{
+        padding-top:20% ;
+    }
+    .container{
+        flex-direction: column;
 
+    }
+}
 
