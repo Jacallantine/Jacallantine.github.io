@@ -73,7 +73,7 @@ body{
     transition: var(--o-transition-duration);
     font-size: 20px;
     border:none;
-    padding: 15px 35px;
+    padding: clamp(10px, 1px, 15px) clamp(20px, 1px, 35px);
 }
 
 button:hover{
