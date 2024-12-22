@@ -65,7 +65,7 @@ async function CreateAccount(){
     }
     console.log(data.AccountID)
 
-    const response = await fetch("http://localhost:5106/api/Account", {
+    const response = await fetch("https://stat-tracker-ea187a1f2816.herokuapp.com/api/Account", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
