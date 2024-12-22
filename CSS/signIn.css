@@ -36,6 +36,7 @@ width: 60%;
     & button{
         display: flex;
         justify-self: center;
+        align-self: center;
     }
     & h1 {
         font-size: 3em;
@@ -79,6 +80,11 @@ width: 60%;
     align-items: center;
     border-left: 2px solid white;
     padding-top: 15%;
+
+    & input {
+        justify-self: center;
+        align-self: center;
+    }
 
     & button{
         display: flex;
@@ -141,9 +147,13 @@ width: 60%;
         padding-top:20%;
        height: 110vh;
         flex-direction: column;
+        align-items:center;
+        justify-content: center;
     }
     .CreateAccount
     {
+        align-items:center;
+        justify-content: center;
         width: 100%;
         height: 50vh;
         padding:5% 0;
@@ -155,9 +165,13 @@ width: 60%;
 
         & button {
             margin-top:10px;
+            align-self: center;
+            justify-self: center;
         }
     }
     .SignInContainer{
+        align-items:center;
+        justify-content: center;
         padding-top: 0%;
         height: 50%;
         width: 100%;
