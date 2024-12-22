@@ -53,6 +53,7 @@ a{
     flex-direction: row;
     /* background-color:green; */
     height: 500px;
+    width: 100vw;
 }
 
 .column{
@@ -74,7 +75,7 @@ a{
 #c2{
     margin-top: 50px;
     flex-direction: row;
-    width: 100%;
+    width: 50%;
     height: 100%;
     column-gap: clamp(5px, 1vw, 8px);
 
@@ -124,9 +125,10 @@ a{
     /* transform: translate(50%, 50%); */
   margin: 5% 0 0 0;
   
-  width: 25vw;
+  width: 25%;
   justify-content: left;
   height: 100%;
+
  
   flex-direction: column;
 
@@ -201,6 +203,7 @@ a{
     }
     #c2{
         order:0;
+        width: 100%;
     }
     #c5{
         width: 100%;
