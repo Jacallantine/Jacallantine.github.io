@@ -115,8 +115,8 @@ width: 60%;
         width: 400px;
         transition: var(--o-transition-duration);
         & input{
-           /* margin: 0 auto;
-            display: block; */
+           margin: 0 auto;
+            /* display: block;  */
             margin-bottom: 25px;
             height: 35px;
             width: 75%;
@@ -182,7 +182,7 @@ width: 60%;
         height: 50%;
         width: 100%;
 
-        & button{
+        & button {
             margin: 0 auto;
         }
        
