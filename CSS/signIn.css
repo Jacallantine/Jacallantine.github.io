@@ -150,8 +150,14 @@ width: 60%;
         align-items:center;
         justify-content: center;
     }
+    .top
+        {
+            text-align: center;
+        }
     .CreateAccount
     {
+            display: flex;
+    
         align-items:center;
         justify-content: center;
         width: 100%;
@@ -164,9 +170,9 @@ width: 60%;
         }
 
         & button {
+            margin:0 auto;
             margin-top:10px;
-            align-self: center;
-            justify-self: center;
+    
         }
     }
     .SignInContainer{
