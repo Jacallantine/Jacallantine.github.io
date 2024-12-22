@@ -183,7 +183,7 @@ width: 60%;
         width: 100%;
 
         & button{
-            /* margin: 0 auto; */
+            margin: 0 auto;
         }
        
     }
