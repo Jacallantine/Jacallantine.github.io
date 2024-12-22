@@ -19,24 +19,71 @@ async function Login() {
         Password: $("#Password").val()
     };
 
+
+    if(!data.UserName || !data.Password)
+    {
+       
+        return
+    }
+else{
     await $.ajax({
         url: "https://stat-tracker-ea187a1f2816.herokuapp.com/api/Login/Login",
         type: "POST", // HTTP method
         data: JSON.stringify(data), // Convert data to JSON string
         contentType: "application/json", // Set the content type to JSON
         success: function (response) {
-            window.open("home.html", "_self")
+            
             console.log("Success:", response); // Handle success
             Username = response
             console.log(Username)
-            sessionStorage.setItem("user", JSON.stringify(Username))
-
+            if(Username === undefined)
+                {
+                    alert("Invalid Username and password")
+                    return
+                }
+                else{
+                    sessionStorage.setItem("user", JSON.stringify(Username))
+                    window.open("home.html", "_self")
+                }
+           
         }
-    });
+
+
+    });}
 }
 
 
+$("#CreateAccountButton").click(function(){
+    CreateAccount()
+})
 
+async function CreateAccount(){
+    let data = {
+        UserName : $("#UserNameC").val(),
+        Password : $("#PasswordC").val(),
+        AccountID : UniqueID()
+    }
+    console.log(data.AccountID)
+
+    const response = await fetch("http://localhost:5106/api/Account", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+    })
+    if(!response.ok)
+    {
+        alert("Please choose a different user name")
+    }
+
+    
+}
+
+function UniqueID()
+{
+    return Math.floor(10000 + Math.random() * 90000);
+}
 
 
 
