@@ -28,8 +28,10 @@ width: 60%;
 }
 
 #SignInForm{
-   /* display: flex;
-    justify-self: center; */
+   display: flex;
+    justify-self: center;
+    align-items: center;
+    flex-direction: column;
     max-width: 90%;
   
 
@@ -47,7 +49,6 @@ width: 60%;
     }
 
     & input {
-        display: block;
        
         justify-self: center;
         align-self: center;
@@ -184,6 +185,10 @@ width: 60%;
 
         & button {
             margin: 0 auto;
+        }
+
+        & input{
+            margin:0 auto;
         }
        
     }
