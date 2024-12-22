@@ -144,11 +144,10 @@ width: 60%;
         /* padding-top:20%; */
     }
     .container{
+       
         padding-top:20%;
        height: 110vh;
         flex-direction: column;
-        align-items:center;
-        justify-content: center;
     }
     .top
         {
@@ -176,11 +175,16 @@ width: 60%;
         }
     }
     .SignInContainer{
+        display: flex;
         align-items:center;
         justify-content: center;
         padding-top: 0%;
         height: 50%;
         width: 100%;
+
+        & button{
+            /* margin: 0 auto; */
+        }
        
     }
 }
