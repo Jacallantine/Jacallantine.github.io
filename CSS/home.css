@@ -195,7 +195,7 @@ a{
 @media (max-width: 800px)
 {
     body{
-        padding-top:20% ;
+        padding-top:25% ;
         flex-direction: column;
     }
     .wrapper{
