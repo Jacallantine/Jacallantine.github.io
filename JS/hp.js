@@ -1,8 +1,8 @@
 $("#arrow, #map").click(function(){
-$("#arrow").toggleClass("arrowClicked")
-$("#dropdown").toggleClass("show")
-$("#HPForm").toggleClass("hide")
-})
+    $("#arrow").toggleClass("arrowClicked")
+    $("#dropdown").fadeToggle(5)
+    $("#HPForm").fadeToggle(5)
+    })
 
 document.getElementById("arrow").addEventListener("click", ()=>{
     
@@ -27,8 +27,8 @@ maplist.forEach(map => {
 
     $(mapButton).click(function() {
         $("#arrow").toggleClass("arrowClicked")
-        $("#dropdown").toggleClass("show");
-        $("#HPForm").toggleClass("hide")
+        $("#dropdown").fadeToggle(5);
+        $("#HPForm").fadeToggle(5)
         $("#mapChosen").text(map)
 
     });

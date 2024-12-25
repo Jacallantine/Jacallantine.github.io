@@ -27,3 +27,8 @@ $("#createPlayer").click(function(){
 $("#createTeam").click(function(){
     $("#teamForm").fadeToggle(400)
 })
+
+
+$("#addData, #addDataM").click(function(){
+window.open("select.html", '_self')
+})
