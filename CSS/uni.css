@@ -1,0 +1,128 @@
+body{
+    background-color: rgb(27,27, 27);
+    color: white;
+}
+
+@keyframes bounce
+{
+    0%{
+        transform: translateY(0);
+    }
+    50%{
+        transform: translateY(20px);
+    }
+    100%{
+        transform: translatey(0x)
+    }
+}
+
+
+@keyframes animateSlideDown {
+    0% {
+        transform: translateY(-150%);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+@keyframes animateSlideUp {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(-150%);
+    }
+}
+
+@keyframes animateSlideUpH1 {
+    0% {
+        transform: translateY(20px);
+        
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        
+        opacity: 1;
+    }
+}
+
+@keyframes typewriter
+{
+    from {width: 0;}
+}
+@keyframes animatedBar {
+    0% {
+        transform: translateX(-100vw); /* Start off-screen to the left */
+    }
+    /* 50% {
+        transform: translateX(120vw); /* Move off-screen to the right */
+    /* }  */
+    100% {
+        transform: translateX(100vw); /* Return to the starting position */
+    }
+}
+
+
+
+h1{
+    font-size: clamp(25px, 5vw, 72px);
+    font-weight: 700;
+    line-height: clamp(30px, 5vw, 72px);
+    /* text-align: center; */
+    opacity: 0;
+    /* animation: animateSlideUpH1 2s forwards ; */
+}
+
+h2{
+    font-size: clamp(28px, 2vw, 48px);
+    font-weight: 700;
+    opacity: 0;
+}
+
+
+h3
+{
+    font-size: clamp(16px, 1.5vw, 34px);
+    font-weight: 600;
+    opacity: 0;
+}
+
+h4{
+    font-size: clamp(20px, 1.8vw, 22px);
+    font-weight: 600;
+}
+
+p{
+    font-size: clamp(12px, 1.4vw, 20px);
+    opacity: 0;
+}
+ 
+li
+{
+    display: flex;
+    font-size: 18px;
+    height: 100%;
+   align-items: center;
+    margin: auto;
+    cursor: pointer;
+    padding:0px 10px;
+    opacity: 0;
+    transition: 300ms ease;
+}
+
+li:hover{
+    background-color: rgba(255, 255, 255, 0.35);
+    transition: 300ms ease;
+}
+img{
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+}
+
+.SlideUp
+{
+    animation: animateSlideUpH1 1s forwards;
+}
