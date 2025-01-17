@@ -824,3 +824,19 @@ video {
     padding-right: 1.5rem;
   }
 }
+
+@media (max-width: 500px) {
+  .\35 00-md\:w-full {
+    width: 100%;
+  }
+
+  .\35 00-md\:px-20 {
+    padding-left: 5rem;
+    padding-right: 5rem;
+  }
+
+  .\35 00-md\:px-0 {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+}
