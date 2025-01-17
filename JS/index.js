@@ -46,7 +46,7 @@ $(document).ready(function () {
     }
   });
 
-  $("#ContactMe, #AboutMe").click(function(e) {
+  $("#ContactMeB, #AboutMeB").click(function(e) {
     e.preventDefault();
     
     const $mobileDrop = $("#MobileDrop");

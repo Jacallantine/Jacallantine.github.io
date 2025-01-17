@@ -830,13 +830,13 @@ video {
     width: 100%;
   }
 
-  .\35 00-md\:px-20 {
-    padding-left: 5rem;
-    padding-right: 5rem;
-  }
-
   .\35 00-md\:px-0 {
     padding-left: 0px;
     padding-right: 0px;
+  }
+
+  .\35 00-md\:px-20 {
+    padding-left: 5rem;
+    padding-right: 5rem;
   }
 }
