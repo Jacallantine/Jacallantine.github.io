@@ -46,6 +46,41 @@ $(document).ready(function () {
     }
   });
 
+  $("#ContactMe, #AboutMe").click(function(e) {
+    e.preventDefault();
+    
+    const $mobileDrop = $("#MobileDrop");
+    const targetId = $(this).attr("href");
+    
+    if ($mobileDrop.hasClass("ShowMobile")) {
+        $mobileDrop.removeClass("ShowMobile").addClass("HideMobile");
+        
+        // Wait for slide up animation
+        $mobileDrop.one("animationend", function() {
+            $mobileDrop.removeClass("HideMobile").addClass("HiddenMobile");
+            
+            // Add a small delay to ensure the mobile menu is fully transformed away
+            setTimeout(() => {
+                const targetElement = $(targetId);
+                
+                // Get element that was actually clicked (the anchor)
+                const clickedElement = $(targetId);
+                
+                // Find the corresponding section instead of the anchor
+                const targetSection = $(`section${targetId}, div${targetId}, article${targetId}`);
+                
+                const headerHeight = $('header').outerHeight() || 0;
+                const scrollTarget = targetSection.length ? targetSection : clickedElement;
+                const scrollPosition = scrollTarget.offset().top - headerHeight;
+                
+                $('html, body').animate({
+                    scrollTop: scrollPosition
+                }, 500);
+            }, 100); // Small delay to ensure everything is repositioned
+        });
+    }
+});
+
 // $(document).ready(function () {
 
 // $(window).on('scroll', function(){
