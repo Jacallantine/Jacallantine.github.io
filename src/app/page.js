@@ -129,7 +129,7 @@ export default function Home() {
                 company: "FastHealth Corporation",
                 role: "Full Stack Web Developer",
                 period: "Feb 2025 – Present (Part time)",
-                desc: "Create ADA compliant websites alongside a UI/UX and responsive design.",
+                desc: "Create ADA-compliant websites alongside a UI/UX and responsive design.",
               },
               {
                 company: "Embrace Alabama Kids",
@@ -179,7 +179,7 @@ export default function Home() {
               },
               {
                 name: "Glam Salon",
-                desc: "Hair salon website created while I interning at The Nine",
+                desc: "Hair salon website created while interning at The Nine",
                 tags: ["JS", "JQuery", "CSS"],
                 href : "https://www.glamsalonandblowdrybar.com/"
 
