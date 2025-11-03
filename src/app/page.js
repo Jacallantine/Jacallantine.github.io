@@ -205,7 +205,7 @@ export default function Home() {
                   <ExternalLink className="w-4 h-4 text-gray-400" />
                 </div>
                 <p className="text-gray-600 mb-4 leading-relaxed">{proj.desc}</p>
-                <div className="flex flex-wrap gap-2 mt-auto absolute bottom-[20px]">
+                <div className="flex flex-wrap gap-2 mt-auto absolute bottom-[10px]">
                   {proj.tags.map((tag, j) => (
                     <span key={j} className="text-xs bg-blue-50 text-blue-700 px-3 py-1 rounded-full">
                       {tag}
