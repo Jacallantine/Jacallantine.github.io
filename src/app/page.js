@@ -103,12 +103,13 @@ export default function Home() {
               Specializing in Next.js, ASP.NET, and database architecture.
             </p>
             <div className="flex gap-4 mb-12">
-              <a 
-                href="mailto:jcallantine3@gmail.com"
+              <button
+                onClick={handleEmailDiv} 
+                
                 className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition font-medium"
               >
                 Get In Touch
-              </a>
+              </button>
               <a 
                 href="#projects"
                 className="border border-gray-300 px-6 py-3 rounded-lg hover:border-gray-400 transition font-medium"
