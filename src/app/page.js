@@ -123,9 +123,9 @@ export default function Home() {
               <a href="https://www.linkedin.com/in/jared-callantine-06aa15269/" target="_blank" className="text-gray-600 hover:text-gray-900 transition">
                 <Linkedin className="w-5 h-5" />
               </a>
-              <a href="mailto:jcallantine@gmail.com" className="text-gray-600 hover:text-gray-900 transition">
+              <button onClick={handleEmailDiv} className="text-gray-600 hover:text-gray-900 transition">
                 <Mail className="w-5 h-5" />
-              </a>
+              </button>
             </div>
           </motion.div>
         </div>
