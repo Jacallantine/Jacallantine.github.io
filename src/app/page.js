@@ -1,8 +1,74 @@
 "use client";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Github, Linkedin, Mail, ExternalLink, Code, Database, Layout } from "lucide-react";
 import Link from "next/link";
+import { useState } from "react";
 export default function Home() {
+
+  const [email, setEmail] = useState("");
+  const [subject, setSubject] = useState("");
+  const [body, setBody] = useState("");
+  const [toggleEmail, setToggleEmail] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState(null); // 'success', 'error', or null
+
+
+  const handleEmailDiv = ()=>{
+    setToggleEmail(!toggleEmail);
+    // Reset form and status when closing
+    if (toggleEmail) {
+      setSubmitStatus(null);
+    }
+  }
+  const handleEmail = (e) =>{
+    setEmail(e.target.value);
+  }
+   const handleSubject = (e) =>{
+    setSubject(e.target.value);
+  }
+   const handleBody = (e) =>{
+    setBody(e.target.value);
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus(null);
+
+    try {
+      const response = await fetch('/api/send-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, subject, body }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setSubmitStatus('success');
+        // Clear form
+        setEmail('');
+        setSubject('');
+        setBody('');
+        // Close modal after 2 seconds
+        setTimeout(() => {
+          setToggleEmail(false);
+          setSubmitStatus(null);
+        }, 2000);
+      } else {
+        setSubmitStatus('error');
+        console.error('Error:', data.error);
+      }
+    } catch (error) {
+      setSubmitStatus('error');
+      console.error('Failed to send email:', error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  }
+
   return (
     <div className="min-h-screen bg-white text-gray-900">
       {/* Navigation */}
@@ -232,15 +298,143 @@ export default function Home() {
               I'm currently open to new opportunities and collaborations. 
               Whether you have a project in mind or just want to connect, feel free to reach out.
             </p>
-            <a
-              href="mailto:jared@example.com"
+            <button
+              onClick={handleEmailDiv}
               className="inline-block bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition font-medium"
             >
               Send Message
-            </a>
+            </button>
           </motion.div>
         </div>
       </section>
+      <AnimatePresence mode="wait">
+        {toggleEmail && (
+          <>
+            {/* Backdrop */}
+            <motion.div
+              key="backdrop"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40"
+              onClick={handleEmailDiv}
+            />
+            
+            {/* Modal */}
+            <motion.div
+              key="modal"
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              variants={{
+                hidden: { opacity: 0, scale: 0.95, y: 20 },
+                visible: { opacity: 1, scale: 1, y: 0 },
+                exit: { opacity: 0, scale: 0.95, y: 20 }
+              }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
+              className="email-modal fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 w-full max-w-md mx-4"
+            >
+              <div className="bg-white rounded-2xl shadow-2xl p-8 relative">
+                {/* Close Button */}
+                <button 
+                  className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors duration-200 w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100" 
+                  onClick={handleEmailDiv}
+                  aria-label="Close modal"
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+
+                {/* Header */}
+                <div className="mb-8">
+                  <h2 className="text-2xl font-bold text-gray-900 mb-2">Send a Message</h2>
+                  <p className="text-sm text-gray-600">I'll get back to you as soon as possible!</p>
+                </div>
+
+                {/* Form */}
+                <form className="space-y-5" onSubmit={handleSubmit}>
+                  {/* Email Input */}
+                  <div>
+                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                      Your Email
+                    </label>
+                    <input 
+                      id="email"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all outline-none text-gray-900" 
+                      type="email" 
+                      name="to" 
+                      placeholder="you@example.com"
+                      value={email} 
+                      onChange={handleEmail}
+                      required
+                      disabled={isSubmitting}
+                    />
+                  </div>
+
+                  {/* Subject Input */}
+                  <div>
+                    <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-2">
+                      Subject
+                    </label>
+                    <input 
+                      id="subject"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all outline-none text-gray-900" 
+                      type="text" 
+                      name="subject" 
+                      placeholder="What's this about?"
+                      value={subject} 
+                      onChange={handleSubject}
+                      required
+                      disabled={isSubmitting}
+                    />
+                  </div>
+
+                  {/* Message Input */}
+                  <div>
+                    <label htmlFor="body" className="block text-sm font-medium text-gray-700 mb-2">
+                      Message
+                    </label>
+                    <textarea 
+                      id="body"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all outline-none text-gray-900 resize-none" 
+                      name="body" 
+                      placeholder="Tell me about your project..."
+                      value={body} 
+                      onChange={handleBody}
+                      rows="4"
+                      required
+                      disabled={isSubmitting}
+                    />
+                  </div>
+
+                  {/* Status Messages */}
+                  {submitStatus === 'success' && (
+                    <div className="bg-green-50 text-green-800 px-4 py-3 rounded-lg text-sm">
+                      ✓ Message sent successfully! I'll get back to you soon.
+                    </div>
+                  )}
+                  {submitStatus === 'error' && (
+                    <div className="bg-red-50 text-red-800 px-4 py-3 rounded-lg text-sm">
+                      ✗ Failed to send message. Please try again or email me directly.
+                    </div>
+                  )}
+
+                  {/* Submit Button */}
+                  <button 
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="w-full bg-blue-600 text-white font-medium py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors duration-200 shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {isSubmitting ? 'Sending...' : 'Send Message'}
+                  </button>
+                </form>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
 
       {/* Footer */}
       <footer className="border-t border-gray-200 py-8 px-6">

@@ -19,6 +19,9 @@
   }
 }
 
+.email-modal{
+  
+}
 body {
   background: var(--background);
   color: var(--foreground);
