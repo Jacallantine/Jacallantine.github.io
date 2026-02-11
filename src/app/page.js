@@ -75,11 +75,13 @@ export default function Home() {
       <nav className="fixed top-0 w-full bg-white/80 backdrop-blur-md border-b border-gray-200 z-50">
         <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
           <span className="text-xl font-semibold">JC</span>
-          <div className="hidden md:flex gap-8 text-sm">
+          <div className="hidden md:flex items-center gap-8 text-sm">
             <a href="#about" className="hover:text-blue-600 transition">About</a>
             <a href="#experience" className="hover:text-blue-600 transition">Experience</a>
             <a href="#projects" className="hover:text-blue-600 transition">Projects</a>
             <a href="#contact" className="hover:text-blue-600 transition">Contact</a>
+          
+  
           </div>
         </div>
       </nav>
@@ -102,21 +104,33 @@ export default function Home() {
               Building efficient, scalable web applications with modern technologies. 
               Specializing in Next.js, ASP.NET, and database architecture.
             </p>
-            <div className="flex gap-4 mb-12">
-              <button
-                onClick={handleEmailDiv} 
-                
-                className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition font-medium"
-              >
-                Get In Touch
-              </button>
-              <a 
-                href="#projects"
-                className="border border-gray-300 px-6 py-3 rounded-lg hover:border-gray-400 transition font-medium"
-              >
-                View Work
-              </a>
-            </div>
+          <div className="flex flex-col sm:flex-row gap-4 mb-12 w-full max-w-xl">
+  
+  <button
+    onClick={handleEmailDiv}
+    className="flex-1 bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition font-medium text-center"
+  >
+    Get In Touch
+  </button>
+
+  <a 
+    href="#projects"
+    className="flex-1 border border-gray-300 px-6 py-3 rounded-lg hover:border-gray-400 transition font-medium text-center"
+  >
+    View Work
+  </a>
+
+  <a 
+    href="/Jared Callantine (7).pdf"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="md:whitespace-nowrap flex-1 bg-gray-900 text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition font-medium text-center"
+  >
+    Download Resume
+  </a>
+
+</div>
+
             <div className="flex gap-5">
               <a href="https://github.com/Jacallantine" target="_blank" className="text-gray-600 hover:text-gray-900 transition">
                 <Github className="w-5 h-5" />
@@ -238,6 +252,12 @@ export default function Home() {
           <div className="grid md:grid-cols-2 gap-8">
             {[
               {
+                name: "Embrace Chore App",
+                desc: "Weekly rotating Chore app for scholars at Embrace Alabama Kids",
+                tags: ["Next.js", "JS", "CSS", "Prisma", "PostgreSQL"],
+                href : "https://embracechoreapp.vercel.app/dashboard"
+              },
+              {
                 name: "Neil J RedField",
                 desc: "Hospital website created while working at FastHealth Corporation",
                 tags: ["PHP", "JS", "CSS"],
@@ -334,7 +354,7 @@ export default function Home() {
                 exit: { opacity: 0, scale: 0.95, y: 20 }
               }}
               transition={{ duration: 0.3, ease: "easeOut" }}
-              className="email-modal fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 w-full max-w-md mx-4"
+              className="px-2 email-modal fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 w-full md:max-w-md max-w-[400px] md:mx-4"
             >
               <div className="bg-white rounded-2xl shadow-2xl p-8 relative">
                 {/* Close Button */}
