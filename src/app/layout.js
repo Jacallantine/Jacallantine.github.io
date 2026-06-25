@@ -12,8 +12,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Jared Callantine",
-  description: "Jared Callantines Portfolio",
+  title: "Jared Callantine | Full-Stack Developer",
+  description:
+    "Portfolio for Jared Callantine, a full-stack developer building responsive web apps, dashboards, and accessible websites.",
 };
 
 export default function RootLayout({ children }) {
