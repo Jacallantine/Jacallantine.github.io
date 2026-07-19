@@ -81,7 +81,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .stage-heading > p:last-child, .stage-subtitle { margin: 14px 0 0; color: var(--muted); font-size: 0.91rem; line-height: 1.55; }
 .stage h1 em { color: var(--pink-deep); font-weight: 500; }
 
-.welcome-stage { align-items: center; justify-content: center; padding-bottom: 112px; text-align: center; }
+.welcome-stage { align-items: center; justify-content: center; padding-bottom: 154px; text-align: center; }
 .welcome-art { width: 170px; height: 170px; position: relative; display: grid; place-items: center; margin: -18px auto 28px; }
 .welcome-art::before { content: ""; position: absolute; inset: 12px; border-radius: 50%; background: radial-gradient(circle, #fbe1e7, #fff5f3 65%, transparent 66%); }
 .envelope { width: 108px; height: 88px; position: relative; z-index: 2; display: grid; place-items: center; border: 1px solid #edbdc8; border-radius: 20px; background: linear-gradient(145deg, #fff, #fff5f5); color: var(--pink-deep); box-shadow: 0 16px 35px rgba(186, 82, 113, 0.18); }
@@ -93,9 +93,12 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .welcome-stage .stage-subtitle { max-width: 310px; }
 .signature-line { display: flex; align-items: center; gap: 8px; margin-top: 24px; color: #ad8f98; font-family: Georgia, serif; font-size: 0.78rem; font-style: italic; }
 .signature-line span { width: 28px; height: 1px; background: #e8c9cf; }
+.invite-decline-message { min-height: 18px; margin: 17px 0 0; color: var(--muted); font-family: Georgia, serif; font-size: 0.73rem; font-style: italic; }
 
 .bottom-action { position: absolute; z-index: 6; left: 0; right: 0; bottom: 0; padding: 30px 24px 22px; background: linear-gradient(180deg, rgba(255,253,251,0), rgba(255,253,251,0.96) 28%, #fffdfb 60%); }
 .bottom-action button, .yes-button, .send-plan-button { width: 100%; min-height: 56px; display: flex; align-items: center; justify-content: center; gap: 10px; border: 0; border-radius: 18px; background: linear-gradient(135deg, var(--pink), var(--pink-deep)); color: white; font-size: 0.91rem; font-weight: 800; box-shadow: 0 14px 28px rgba(202, 63, 109, 0.24); cursor: pointer; text-decoration: none; }
+.invite-actions { display: flex; min-height: 142px; flex-direction: column; align-items: center; gap: 9px; padding-top: 31px; }
+.invite-actions .welcome-decline { width: auto; min-width: 104px; min-height: 40px; border: 1px solid var(--line); border-radius: 14px; background: white; color: var(--muted); font-size: 0.74rem; box-shadow: none; }
 
 .activity-list { display: grid; grid-template-columns: 1fr 1fr; gap: 11px; }
 .activity-option { min-height: 128px; position: relative; display: flex; flex-direction: column; align-items: flex-start; border: 1px solid var(--line); border-radius: 20px; background: rgba(255,255,255,0.82); padding: 14px; color: var(--ink); text-align: left; cursor: pointer; transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease; }
@@ -185,6 +188,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   .welcome-stage h1 { font-size: 3.1rem; }
   .welcome-stage .stage-subtitle { margin-top: 10px; }
   .signature-line { margin-top: 14px; }
+  .invite-decline-message { margin-top: 10px; }
   .activity-option { min-height: 110px; }
   .celebration-burst { height: 80px; margin-bottom: 2px; }
   .date-pass { margin-top: 13px; }

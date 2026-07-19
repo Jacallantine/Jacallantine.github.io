@@ -53,6 +53,8 @@ export default function Home() {
   const [time, setTime] = useState("");
   const [note, setNote] = useState("");
   const [formMessage, setFormMessage] = useState("");
+  const [inviteNoAttempts, setInviteNoAttempts] = useState(0);
+  const [inviteNoPosition, setInviteNoPosition] = useState({ x: 0, y: 0 });
   const [noAttempts, setNoAttempts] = useState(0);
   const [noPosition, setNoPosition] = useState({ x: 0, y: 0 });
   const [sendStatus, setSendStatus] = useState("idle");
@@ -95,6 +97,16 @@ export default function Home() {
     setNoPosition({
       x: Math.cos(angle) * (38 + (attempt % 2) * 16),
       y: Math.sin(angle) * (11 + (attempt % 3) * 5),
+    });
+  };
+
+  const moveInviteDecline = () => {
+    const attempt = inviteNoAttempts + 1;
+    const angle = attempt * 2.41;
+    setInviteNoAttempts(attempt);
+    setInviteNoPosition({
+      x: Math.cos(angle) * (42 + (attempt % 2) * 14),
+      y: Math.sin(angle) * 9,
     });
   };
 
@@ -184,7 +196,33 @@ export default function Home() {
                 <h1>You have a<br /><em>love note.</em></h1>
                 <p className="stage-subtitle">It comes with one very important question and a promise of a really cute date.</p>
                 <div className="signature-line"><span /> made just for you <span /></div>
-                <BottomAction onClick={() => goTo(1)}>Open my invitation <ArrowRight size={19} /></BottomAction>
+                <p className="invite-decline-message" aria-live="polite">
+                  {inviteNoAttempts
+                    ? noMessages[(inviteNoAttempts - 1) % noMessages.length]
+                    : "You can try to decline… if you’re quick."}
+                </p>
+                <div className="bottom-action invite-actions">
+                  <motion.button
+                    type="button"
+                    className="invite-primary"
+                    onClick={() => goTo(1)}
+                    whileHover={{ y: -2 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    Open my invitation <ArrowRight size={19} />
+                  </motion.button>
+                  <motion.button
+                    type="button"
+                    className="welcome-decline"
+                    aria-label="Decline (this playful button scoots away)"
+                    animate={inviteNoPosition}
+                    transition={{ type: "spring", stiffness: 430, damping: 23 }}
+                    onPointerEnter={moveInviteDecline}
+                    onClick={moveInviteDecline}
+                  >
+                    Decline
+                  </motion.button>
+                </div>
               </Stage>
             )}
 
