@@ -18,6 +18,9 @@ export default defineConfig(async () => {
   process.env.MINIFLARE_REGISTRY_PATH ??= ".wrangler/registry";
   const { cloudflare } = await import("@cloudflare/vite-plugin");
   return {
+    server: {
+      allowedHosts: ["ac1a-153-33-18-244.ngrok-free.app"],
+    },
     plugins: [
       vinext(),
       sites(),

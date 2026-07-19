@@ -2,12 +2,16 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import {
+  ArrowRight,
   CalendarDays,
   Check,
+  ChevronLeft,
   Clock3,
   Flower2,
   Gamepad2,
   Heart,
+  MailOpen,
+  MapPin,
   PartyPopper,
   Popcorn,
   Send,
@@ -17,61 +21,40 @@ import {
 import { useMemo, useState } from "react";
 
 const activities = [
-  {
-    id: "dinner",
-    title: "Dinner date",
-    note: "Dress cute, eat well",
-    icon: UtensilsCrossed,
-  },
-  {
-    id: "picnic",
-    title: "Picnic",
-    note: "Blanket, snacks, sunset",
-    icon: Flower2,
-  },
-  {
-    id: "arcade",
-    title: "Arcade night",
-    note: "Winner gets bragging rights",
-    icon: Gamepad2,
-  },
-  {
-    id: "movie",
-    title: "Movie + snacks",
-    note: "Your pick, obviously",
-    icon: Popcorn,
-  },
-  {
-    id: "adventure",
-    title: "Little adventure",
-    note: "We go somewhere new",
-    icon: Sparkles,
-  },
-  {
-    id: "surprise",
-    title: "Surprise me",
-    note: "I plan the whole thing",
-    icon: Heart,
-  },
+  { id: "dinner", title: "Dinner date", note: "Dress cute, eat well", icon: UtensilsCrossed, tone: "rose" },
+  { id: "picnic", title: "Picnic", note: "Snacks and a sunset", icon: Flower2, tone: "peach" },
+  { id: "arcade", title: "Arcade night", note: "Winner gets bragging rights", icon: Gamepad2, tone: "lilac" },
+  { id: "movie", title: "Movie night", note: "Your pick, obviously", icon: Popcorn, tone: "butter" },
+  { id: "adventure", title: "Adventure", note: "Somewhere new together", icon: MapPin, tone: "mint" },
+  { id: "surprise", title: "Surprise me", note: "I plan the whole thing", icon: Sparkles, tone: "pink" },
 ];
 
 const noMessages = [
-  "Wait… that button looks suspicious.",
-  "Nice try, pretty girl 😌",
-  "I think you meant the pink button.",
-  "The ‘no’ button is feeling shy.",
-  "Okay, okay — just say yes already 💗",
+  "That button is a little shy.",
+  "Nice try, pretty girl.",
+  "I think you meant the pink one.",
+  "Nope, still not an option.",
+  "Okay, just say yes already!",
 ];
 
+const stepCopy = ["Invitation", "The plan", "The when", "A little note", "The question"];
+
+const slideVariants = {
+  enter: (direction) => ({ x: direction > 0 ? 52 : -52, opacity: 0, scale: 0.985 }),
+  center: { x: 0, opacity: 1, scale: 1 },
+  exit: (direction) => ({ x: direction > 0 ? -52 : 52, opacity: 0, scale: 0.985 }),
+};
+
 export default function Home() {
+  const [step, setStep] = useState(0);
+  const [direction, setDirection] = useState(1);
   const [selectedActivity, setSelectedActivity] = useState("dinner");
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
   const [note, setNote] = useState("");
-  const [accepted, setAccepted] = useState(false);
+  const [formMessage, setFormMessage] = useState("");
   const [noAttempts, setNoAttempts] = useState(0);
   const [noPosition, setNoPosition] = useState({ x: 0, y: 0 });
-  const [formMessage, setFormMessage] = useState("");
   const [sendStatus, setSendStatus] = useState("idle");
 
   const activity = useMemo(
@@ -79,36 +62,50 @@ export default function Home() {
     [selectedActivity]
   );
 
-  const moveNoButton = () => {
-    const attempt = noAttempts + 1;
-    const angle = attempt * 2.17;
-    const x = Math.cos(angle) * (55 + (attempt % 3) * 16);
-    const y = Math.sin(angle) * (20 + (attempt % 2) * 16);
-    setNoAttempts(attempt);
-    setNoPosition({ x, y });
+  const prettyDate = date
+    ? new Intl.DateTimeFormat("en-US", { weekday: "long", month: "long", day: "numeric" }).format(
+        new Date(`${date}T12:00:00`)
+      )
+    : "Pick a day";
+
+  const prettyTime = time
+    ? new Intl.DateTimeFormat("en-US", { hour: "numeric", minute: "2-digit" }).format(
+        new Date(`2026-01-01T${time}:00`)
+      )
+    : "Pick a time";
+
+  const goTo = (nextStep) => {
+    setDirection(nextStep > step ? 1 : -1);
+    setFormMessage("");
+    setStep(nextStep);
   };
 
-  const handleAccept = async () => {
+  const continueFromSchedule = () => {
     if (!date || !time) {
-      setFormMessage("Pick a day and time first, cutie 💌");
-      document.getElementById("date-picker")?.focus();
+      setFormMessage("Choose a day and time for us first.");
       return;
     }
+    goTo(3);
+  };
 
-    setFormMessage("");
-    setAccepted(true);
+  const moveNoButton = () => {
+    const attempt = noAttempts + 1;
+    const angle = attempt * 2.38;
+    setNoAttempts(attempt);
+    setNoPosition({
+      x: Math.cos(angle) * (38 + (attempt % 2) * 16),
+      y: Math.sin(angle) * (11 + (attempt % 3) * 5),
+    });
+  };
+
+  const acceptDate = async () => {
+    goTo(5);
     setSendStatus("sending");
-
     try {
       const response = await fetch("/api/send-email", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          date,
-          time,
-          activity: activity.title,
-          note,
-        }),
+        body: JSON.stringify({ date, time, activity: activity.title, note }),
       });
       setSendStatus(response.ok ? "sent" : "fallback");
     } catch {
@@ -116,230 +113,275 @@ export default function Home() {
     }
   };
 
-  const prettyDate = date
-    ? new Intl.DateTimeFormat("en-US", {
-        weekday: "long",
-        month: "long",
-        day: "numeric",
-      }).format(new Date(`${date}T12:00:00`))
-    : "our date";
-
-  const prettyTime = time
-    ? new Intl.DateTimeFormat("en-US", {
-        hour: "numeric",
-        minute: "2-digit",
-      }).format(new Date(`2026-01-01T${time}:00`))
-    : "the perfect time";
-
-  const mailSubject = encodeURIComponent("I said YES to our date 💗");
+  const mailSubject = encodeURIComponent("I said YES to our date! 💗");
   const mailBody = encodeURIComponent(
-    `It's a date!\n\nDate: ${prettyDate}\nTime: ${prettyTime}\nPlan: ${activity.title}${
-      note ? `\nNote: ${note}` : ""
-    }`
+    `It's a date!\n\nDate: ${prettyDate}\nTime: ${prettyTime}\nPlan: ${activity.title}${note ? `\nNote: ${note}` : ""}`
   );
 
   return (
-    <main className="love-page">
-      <div className="paper-noise" aria-hidden="true" />
-      <div className="floating-heart heart-one" aria-hidden="true">♥</div>
-      <div className="floating-heart heart-two" aria-hidden="true">♥</div>
-      <div className="floating-heart heart-three" aria-hidden="true">♥</div>
+    <main className="app-background">
+      <div className="ambient-orb orb-one" aria-hidden="true" />
+      <div className="ambient-orb orb-two" aria-hidden="true" />
 
-      <AnimatePresence mode="wait">
-        {!accepted ? (
-          <motion.section
-            key="invitation"
-            className="invitation-shell"
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.97 }}
-            transition={{ duration: 0.45 }}
-          >
-            <header className="love-header">
-              <div className="tiny-label">
-                <Heart size={14} fill="currentColor" />
-                a very important question
-              </div>
-              <h1>Will you go on a<br /><em>little date</em> with me?</h1>
-              <p>
-                I’ll bring the good company. You just pick when and what sounds fun.
-              </p>
-              <div className="love-note" aria-hidden="true">
-                <span>made with</span>
-                <Heart size={18} fill="currentColor" />
-                <span>just for you</span>
-              </div>
-            </header>
+      <section className="mobile-app" aria-label="Date invitation app">
+        <div className="app-grain" aria-hidden="true" />
 
-            <div className="planner-card">
-              <div className="planner-heading">
-                <span>01</span>
-                <div>
-                  <h2>Choose our adventure</h2>
-                  <p>There are no wrong answers here.</p>
-                </div>
-              </div>
+        {step < 5 && (
+          <header className="app-topbar">
+            <button
+              type="button"
+              className={`back-button ${step === 0 ? "invisible" : ""}`}
+              onClick={() => step > 0 && goTo(step - 1)}
+              aria-label="Go back"
+              tabIndex={step === 0 ? -1 : 0}
+            >
+              <ChevronLeft size={21} />
+            </button>
 
-              <div className="activity-grid" role="radiogroup" aria-label="Date activity">
-                {activities.map((item) => {
-                  const Icon = item.icon;
-                  const isSelected = selectedActivity === item.id;
-                  return (
-                    <button
-                      key={item.id}
-                      type="button"
-                      role="radio"
-                      aria-checked={isSelected}
-                      className={`activity-card ${isSelected ? "selected" : ""}`}
-                      onClick={() => setSelectedActivity(item.id)}
-                    >
-                      <span className="activity-icon"><Icon size={21} /></span>
-                      <span className="activity-copy">
-                        <strong>{item.title}</strong>
-                        <small>{item.note}</small>
-                      </span>
-                      <span className="check-dot" aria-hidden="true">
-                        {isSelected && <Check size={13} strokeWidth={3} />}
-                      </span>
-                    </button>
-                  );
-                })}
-              </div>
-
-              <div className="soft-divider" />
-
-              <div className="planner-heading compact">
-                <span>02</span>
-                <div>
-                  <h2>Save the date</h2>
-                  <p>Choose a day that belongs to us.</p>
-                </div>
-              </div>
-
-              <div className="date-row">
-                <label className="field-label" htmlFor="date-picker">
-                  <span><CalendarDays size={16} /> Date</span>
-                  <input
-                    id="date-picker"
-                    type="date"
-                    value={date}
-                    onChange={(event) => setDate(event.target.value)}
+            <div className="progress-wrap">
+              <span>{stepCopy[step]}</span>
+              <div className="progress-track" aria-label={`Step ${step + 1} of 5`}>
+                {[0, 1, 2, 3, 4].map((item) => (
+                  <motion.i
+                    key={item}
+                    className={item <= step ? "active" : ""}
+                    animate={{ scale: item === step ? 1.08 : 1 }}
                   />
-                </label>
-                <label className="field-label" htmlFor="time-picker">
-                  <span><Clock3 size={16} /> Time</span>
-                  <input
-                    id="time-picker"
-                    type="time"
-                    value={time}
-                    onChange={(event) => setTime(event.target.value)}
-                  />
-                </label>
+                ))}
               </div>
+            </div>
 
-              <label className="field-label note-field" htmlFor="date-note">
-                <span>A tiny note <small>(optional)</small></span>
-                <textarea
-                  id="date-note"
-                  value={note}
-                  onChange={(event) => setNote(event.target.value)}
-                  placeholder="Dessert is non-negotiable..."
-                  maxLength={180}
-                />
-              </label>
+            <span className="top-heart" aria-hidden="true"><Heart size={18} fill="currentColor" /></span>
+          </header>
+        )}
 
-              {formMessage && <p className="form-message" role="alert">{formMessage}</p>}
-
-              <div className="answer-zone">
-                <p>{noAttempts ? noMessages[(noAttempts - 1) % noMessages.length] : "So… what do you say?"}</p>
-                <div className="answer-buttons">
-                  <motion.button
-                    type="button"
-                    className="yes-button"
-                    onClick={handleAccept}
-                    whileHover={{ y: -3, scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
+        <div className="stage-viewport">
+          <AnimatePresence mode="wait" custom={direction}>
+            {step === 0 && (
+              <Stage key="welcome" direction={direction} className="welcome-stage">
+                <div className="welcome-art" aria-hidden="true">
+                  <motion.span
+                    className="orbit-heart orbit-one"
+                    animate={{ y: [0, -8, 0], rotate: [-8, 4, -8] }}
+                    transition={{ duration: 3.4, repeat: Infinity, ease: "easeInOut" }}
+                  ><Heart size={20} fill="currentColor" /></motion.span>
+                  <motion.span
+                    className="orbit-heart orbit-two"
+                    animate={{ y: [0, 7, 0], rotate: [8, -5, 8] }}
+                    transition={{ duration: 3.8, repeat: Infinity, ease: "easeInOut" }}
+                  ><Heart size={14} fill="currentColor" /></motion.span>
+                  <motion.div
+                    className="envelope"
+                    initial={{ scale: 0.75, rotate: -8 }}
+                    animate={{ scale: 1, rotate: 0 }}
+                    transition={{ type: "spring", stiffness: 150, damping: 14 }}
                   >
-                    Yes, it’s a date <Heart size={18} fill="currentColor" />
+                    <MailOpen size={46} strokeWidth={1.6} />
+                    <span><Heart size={24} fill="currentColor" /></span>
+                  </motion.div>
+                </div>
+                <p className="eyebrow">A tiny something for you</p>
+                <h1>You have a<br /><em>love note.</em></h1>
+                <p className="stage-subtitle">It comes with one very important question and a promise of a really cute date.</p>
+                <div className="signature-line"><span /> made just for you <span /></div>
+                <BottomAction onClick={() => goTo(1)}>Open my invitation <ArrowRight size={19} /></BottomAction>
+              </Stage>
+            )}
+
+            {step === 1 && (
+              <Stage key="activity" direction={direction}>
+                <StageHeading kicker="First things first" title="What should we do?" subtitle="Pick your favorite. I’ll handle the rest." />
+                <div className="activity-list" role="radiogroup" aria-label="Choose a date activity">
+                  {activities.map((item, index) => {
+                    const Icon = item.icon;
+                    const selected = item.id === selectedActivity;
+                    return (
+                      <motion.button
+                        key={item.id}
+                        type="button"
+                        role="radio"
+                        aria-checked={selected}
+                        className={`activity-option ${selected ? "selected" : ""}`}
+                        onClick={() => setSelectedActivity(item.id)}
+                        initial={{ opacity: 0, y: 12 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: index * 0.045 }}
+                        whileTap={{ scale: 0.98 }}
+                      >
+                        <span className={`option-icon ${item.tone}`}><Icon size={23} /></span>
+                        <span className="option-copy"><strong>{item.title}</strong><small>{item.note}</small></span>
+                        <span className="select-ring">{selected && <Check size={14} strokeWidth={3} />}</span>
+                      </motion.button>
+                    );
+                  })}
+                </div>
+                <BottomAction onClick={() => goTo(2)}>That’s the one <ArrowRight size={19} /></BottomAction>
+              </Stage>
+            )}
+
+            {step === 2 && (
+              <Stage key="schedule" direction={direction}>
+                <StageHeading kicker="Perfect choice" title="When are you free?" subtitle="Choose a day and time that belongs to us." />
+                <div className="schedule-card">
+                  <label className="big-input" htmlFor="date-picker">
+                    <span className="input-icon"><CalendarDays size={22} /></span>
+                    <span className="input-copy"><small>OUR DAY</small><strong>{prettyDate}</strong></span>
+                    <input id="date-picker" type="date" value={date} onChange={(event) => setDate(event.target.value)} />
+                  </label>
+                  <div className="input-divider" />
+                  <label className="big-input" htmlFor="time-picker">
+                    <span className="input-icon peach"><Clock3 size={22} /></span>
+                    <span className="input-copy"><small>MEET ME AT</small><strong>{prettyTime}</strong></span>
+                    <input id="time-picker" type="time" value={time} onChange={(event) => setTime(event.target.value)} />
+                  </label>
+                </div>
+                <motion.div className="mini-plan" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.25 }}>
+                  <span className={`option-icon ${activity.tone}`}><activity.icon size={20} /></span>
+                  <div><small>THE PLAN SO FAR</small><strong>{activity.title}</strong></div>
+                  <Heart size={16} fill="currentColor" />
+                </motion.div>
+                {formMessage && <p className="form-message" role="alert">{formMessage}</p>}
+                <BottomAction onClick={continueFromSchedule}>Save our date <ArrowRight size={19} /></BottomAction>
+              </Stage>
+            )}
+
+            {step === 3 && (
+              <Stage key="note" direction={direction}>
+                <StageHeading kicker="Almost there" title="Any special requests?" subtitle="Leave me a hint, a demand, or a sweet little note." />
+                <label className="note-card" htmlFor="date-note">
+                  <span>Dear handsome,</span>
+                  <textarea
+                    id="date-note"
+                    value={note}
+                    onChange={(event) => setNote(event.target.value)}
+                    placeholder="Dessert is non-negotiable..."
+                    maxLength={180}
+                    autoFocus
+                  />
+                  <small>{note.length}/180</small>
+                </label>
+                <div className="note-prompts">
+                  {["Pick me up 💗", "I want dessert", "Make it a surprise"].map((prompt) => (
+                    <button key={prompt} type="button" onClick={() => setNote(prompt)}>{prompt}</button>
+                  ))}
+                </div>
+                <p className="skip-copy">You can leave it blank. I already know the main request: spend time with you.</p>
+                <BottomAction onClick={() => goTo(4)}>{note ? "Seal my note" : "Skip for now"} <ArrowRight size={19} /></BottomAction>
+              </Stage>
+            )}
+
+            {step === 4 && (
+              <Stage key="question" direction={direction} className="question-stage">
+                <motion.div
+                  className="question-heart"
+                  animate={{ scale: [1, 1.08, 1] }}
+                  transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+                ><Heart size={34} fill="currentColor" /></motion.div>
+                <p className="eyebrow">One last thing</p>
+                <h1>Will you go on this<br /><em>little date</em> with me?</h1>
+                <div className="review-ticket">
+                  <div><span className={`option-icon ${activity.tone}`}><activity.icon size={20} /></span><p><small>WHAT</small><strong>{activity.title}</strong></p></div>
+                  <div><span className="option-icon rose"><CalendarDays size={20} /></span><p><small>WHEN</small><strong>{prettyDate} · {prettyTime}</strong></p></div>
+                </div>
+                <p className="no-message">{noAttempts ? noMessages[(noAttempts - 1) % noMessages.length] : "Choose wisely, pretty girl."}</p>
+                <div className="final-actions">
+                  <motion.button type="button" className="yes-button" onClick={acceptDate} whileTap={{ scale: 0.97 }}>
+                    Yes, it’s a date <Heart size={19} fill="currentColor" />
                   </motion.button>
                   <motion.button
                     type="button"
                     className="no-button"
                     aria-label="No (this playful button scoots away)"
                     animate={noPosition}
-                    transition={{ type: "spring", stiffness: 420, damping: 24 }}
+                    transition={{ type: "spring", stiffness: 430, damping: 23 }}
                     onPointerEnter={moveNoButton}
                     onClick={moveNoButton}
-                  >
-                    No
-                  </motion.button>
+                  >No</motion.button>
                 </div>
-              </div>
-            </div>
-
-            <p className="footer-whisper">P.S. I already knew you’d say yes.</p>
-          </motion.section>
-        ) : (
-          <motion.section
-            key="accepted"
-            className="celebration-card"
-            initial={{ opacity: 0, scale: 0.88, rotate: -2 }}
-            animate={{ opacity: 1, scale: 1, rotate: 0 }}
-            transition={{ type: "spring", stiffness: 180, damping: 18 }}
-          >
-            <motion.div
-              className="celebration-icon"
-              initial={{ scale: 0, rotate: -20 }}
-              animate={{ scale: 1, rotate: 0 }}
-              transition={{ delay: 0.2, type: "spring" }}
-            >
-              <PartyPopper size={36} />
-            </motion.div>
-            <p className="tiny-label centered"><Heart size={14} fill="currentColor" /> it’s official</p>
-            <h1>Yay! It’s a date.</h1>
-            <p className="celebration-subtitle">Best decision you’ve made all day, if you ask me.</p>
-
-            <div className="date-ticket">
-              <div className="ticket-top">
-                <span>OUR LITTLE DATE</span>
-                <span>ADMIT TWO</span>
-              </div>
-              <div className="ticket-main">
-                <div>
-                  <small>WHEN</small>
-                  <strong>{prettyDate}</strong>
-                  <span>{prettyTime}</span>
-                </div>
-                <div>
-                  <small>THE PLAN</small>
-                  <strong>{activity.title}</strong>
-                  <span>{activity.note}</span>
-                </div>
-              </div>
-              {note && <p className="ticket-note">“{note}”</p>}
-            </div>
-
-            <div className="send-note" aria-live="polite">
-              {sendStatus === "sending" && "Sealing the plan with a kiss…"}
-              {sendStatus === "sent" && "Perfect — I’ve been notified. See you then 💗"}
-              {sendStatus === "fallback" && "One last tap sends me the details:"}
-            </div>
-
-            {sendStatus === "fallback" && (
-              <a
-                className="send-plan-button"
-                href={`mailto:jacallantine@crimson.ua.edu?subject=${mailSubject}&body=${mailBody}`}
-              >
-                Send me our plan <Send size={17} />
-              </a>
+              </Stage>
             )}
 
-            <button type="button" className="edit-plan-button" onClick={() => setAccepted(false)}>
-              Change the plan
-            </button>
-          </motion.section>
-        )}
-      </AnimatePresence>
+            {step === 5 && (
+              <Stage key="celebration" direction={direction} className="celebration-stage">
+                <div className="celebration-burst" aria-hidden="true">
+                  {[0, 1, 2, 3, 4, 5, 6, 7].map((item) => (
+                    <motion.i
+                      key={item}
+                      initial={{ x: 0, y: 0, opacity: 0, scale: 0 }}
+                      animate={{
+                        x: Math.cos((item / 8) * Math.PI * 2) * 88,
+                        y: Math.sin((item / 8) * Math.PI * 2) * 72,
+                        opacity: [0, 1, 0],
+                        scale: [0, 1, 0.7],
+                      }}
+                      transition={{ duration: 1.1, delay: 0.15 + item * 0.035 }}
+                    >♥</motion.i>
+                  ))}
+                  <motion.span initial={{ scale: 0, rotate: -20 }} animate={{ scale: 1, rotate: 0 }} transition={{ type: "spring", delay: 0.12 }}>
+                    <PartyPopper size={40} />
+                  </motion.span>
+                </div>
+                <p className="eyebrow">It’s official</p>
+                <h1>Yay! It’s<br /><em>a date.</em></h1>
+                <p className="stage-subtitle">Best decision you’ve made all day, if you ask me.</p>
+                <div className="date-pass">
+                  <div className="pass-label"><span>OUR LITTLE DATE</span><span>ADMIT TWO</span></div>
+                  <div className="pass-row"><small>WHEN</small><strong>{prettyDate}</strong><span>{prettyTime}</span></div>
+                  <div className="pass-row"><small>THE PLAN</small><strong>{activity.title}</strong><span>{activity.note}</span></div>
+                  {note && <p>“{note}”</p>}
+                </div>
+                <div className="send-status" aria-live="polite">
+                  {sendStatus === "sending" && "Sealing the plan with a kiss…"}
+                  {sendStatus === "sent" && "Perfect — I’ve been notified. See you then 💗"}
+                  {sendStatus === "fallback" && "One last tap sends me the details:"}
+                </div>
+                {sendStatus === "fallback" && (
+                  <a className="send-plan-button" href={`mailto:jacallantine@crimson.ua.edu?subject=${mailSubject}&body=${mailBody}`}>
+                    Send our plan <Send size={17} />
+                  </a>
+                )}
+                <button type="button" className="restart-button" onClick={() => goTo(1)}>Change our plan</button>
+              </Stage>
+            )}
+          </AnimatePresence>
+        </div>
+      </section>
     </main>
+  );
+}
+
+function Stage({ children, direction, className = "" }) {
+  return (
+    <motion.div
+      className={`stage ${className}`}
+      custom={direction}
+      variants={slideVariants}
+      initial="enter"
+      animate="center"
+      exit="exit"
+      transition={{ duration: 0.34, ease: [0.22, 1, 0.36, 1] }}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+function StageHeading({ kicker, title, subtitle }) {
+  return (
+    <header className="stage-heading">
+      <p className="eyebrow">{kicker}</p>
+      <h1>{title}</h1>
+      <p>{subtitle}</p>
+    </header>
+  );
+}
+
+function BottomAction({ children, onClick }) {
+  return (
+    <div className="bottom-action">
+      <motion.button type="button" onClick={onClick} whileHover={{ y: -2 }} whileTap={{ scale: 0.98 }}>
+        {children}
+      </motion.button>
+    </div>
   );
 }
