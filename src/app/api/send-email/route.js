@@ -1,5 +1,7 @@
-import { Resend } from "resend";
 import { NextResponse } from "next/server";
+
+const PORTFOLIO_EMAIL_ENDPOINT =
+  "https://jacallantine-github-io.vercel.app/api/send-email";
 
 export async function POST(request) {
   try {
@@ -9,46 +11,51 @@ export async function POST(request) {
       return NextResponse.json({ error: "Missing date details" }, { status: 400 });
     }
 
-    if (!process.env.RESEND_API_KEY) {
-      return NextResponse.json({ error: "Email service is not configured" }, { status: 503 });
-    }
+    const message = [
+      "She said YES to the date!",
+      "",
+      `Date: ${date}`,
+      `Time: ${time}`,
+      `Activity: ${activity}`,
+      note ? `Her note: ${note}` : null,
+      "",
+      "Sent from the date invitation website.",
+    ]
+      .filter(Boolean)
+      .join("\n");
 
-    const resend = new Resend(process.env.RESEND_API_KEY);
-    const safeDate = escapeHtml(date);
-    const safeTime = escapeHtml(time);
-    const safeActivity = escapeHtml(activity);
-    const safeNote = escapeHtml(note);
-
-    const { data, error } = await resend.emails.send({
-      from: "Date Night <onboarding@resend.dev>",
-      to: ["jacallantine@crimson.ua.edu"],
-      subject: "She said YES to the date 💗",
-      html: `
-        <div style="font-family:Arial,sans-serif;color:#442d35;line-height:1.6">
-          <h1 style="color:#c93f6c">It’s a date!</h1>
-          <p><strong>Date:</strong> ${safeDate}</p>
-          <p><strong>Time:</strong> ${safeTime}</p>
-          <p><strong>Activity:</strong> ${safeActivity}</p>
-          ${safeNote ? `<p><strong>Her note:</strong> ${safeNote}</p>` : ""}
-        </div>
-      `,
+    // Send through the already-configured portfolio contact endpoint. That
+    // deployment owns RESEND_API_KEY and the verified recipient configuration.
+    const portfolioResponse = await fetch(PORTFOLIO_EMAIL_ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email: "jcallantine3@gmail.com",
+        subject: "She said YES to the date!",
+        body: message,
+      }),
+      cache: "no-store",
     });
 
-    if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
+    const responseBody = await portfolioResponse.json().catch(() => ({}));
+
+    if (!portfolioResponse.ok) {
+      console.error("Portfolio email endpoint error:", responseBody.error);
+      return NextResponse.json(
+        { error: responseBody.error || "Portfolio email service failed" },
+        { status: portfolioResponse.status }
+      );
     }
 
-    return NextResponse.json({ message: "Date accepted", id: data.id });
-  } catch {
-    return NextResponse.json({ error: "Could not save the date" }, { status: 500 });
+    return NextResponse.json({
+      message: "Date confirmation sent through the portfolio email service",
+      id: responseBody.id,
+    });
+  } catch (error) {
+    console.error("Date email proxy error:", error);
+    return NextResponse.json(
+      { error: "Could not send the date confirmation" },
+      { status: 500 }
+    );
   }
-}
-
-function escapeHtml(value) {
-  return String(value)
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/\"/g, "&quot;")
-    .replace(/'/g, "&#39;");
 }
