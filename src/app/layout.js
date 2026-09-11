@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 export const metadata = {
   title: "Jared Callantine | Full-Stack Developer",
   description:
-    "Portfolio for Jared Callantine, a full-stack developer building responsive web apps, dashboards, and accessible websites.",
+    "Thoughtful code. Tangible impact. Explore Jared Callantine’s work in full-stack applications, AI esports coaching, accessible websites, and interactive worlds.",
 };
 
 export default function RootLayout({ children }) {
