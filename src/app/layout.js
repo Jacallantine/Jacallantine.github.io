@@ -12,7 +12,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Jared Callantine | Full-Stack Developer",
+  title: "Jared Callantine | Fullstack Developer",
   description:
     "Thoughtful code. Tangible impact. Explore Jared Callantine’s work in full-stack applications, AI esports coaching, accessible websites, and interactive worlds.",
 };

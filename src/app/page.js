@@ -323,7 +323,7 @@ export default function Home() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
               >
-                <span className="status-dot" /> FULL-STACK DEVELOPER / ALABAMA
+                <span className="status-dot" /> FULLSTACK DEVELOPER / ALABAMA
               </motion.p>
               <motion.h1
                 initial={{ opacity: 0, y: reduced ? 0 : 22 }}
@@ -541,11 +541,10 @@ export default function Home() {
                   systems underneath hold up.
                 </p>
                 <p>
-                  I hold a bachelor’s degree in Management Information Systems
-                  from the University of Alabama and am pursuing a second
-                  bachelor’s in Computer Science, expected in December 2028.
-                  That mix of business, data, and engineering shapes how I
-                  build.
+                  I graduated from the University of Alabama in December 2025
+                  with a bachelor’s degree in Management Information Systems
+                  and a 3.0 GPA. My background in business and data shapes how
+                  I build.
                 </p>
                 <a
                   className="text-link"

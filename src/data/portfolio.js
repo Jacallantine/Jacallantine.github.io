@@ -36,7 +36,7 @@ export const projects = [
     category: "Products",
     type: "FULL-STACK APPLICATION",
     description:
-      "A weekly rotating chore platform that makes shared responsibilities easier to organize for scholars at Embrace Alabama Kids.",
+      "An app built for Embrace Alabama Kids that assigns weekly rotating chores and manages scheduled rides for scholars.",
     tags: ["Next.js", "Prisma", "PostgreSQL"],
     href: "https://embracechoreapp.vercel.app/dashboard",
   },
@@ -104,7 +104,7 @@ export const projects = [
 export const experience = [
   {
     company: "FastHealth Corporation",
-    role: "Full Stack Web Developer",
+    role: "Fullstack Developer",
     period: "Feb 2025 — Present",
     type: "Part time",
     description:
@@ -112,11 +112,11 @@ export const experience = [
   },
   {
     company: "Embrace Alabama Kids",
-    role: "Data Analyst / Full Stack Web Developer",
-    period: "Aug 2025 — Present",
+    role: "Data Analyst / Fullstack Developer",
+    period: "Aug 2025 — Oct 1, 2026",
     type: "Part time",
     description:
-      "Developing dashboards, data visualizations, and web tools that help leadership access and understand key analytics.",
+      "Developed dashboards and data visualizations to help leadership understand program analytics, and built an app that assigns chores and manages scheduled rides for scholars.",
   },
   {
     company: "The Nine",
