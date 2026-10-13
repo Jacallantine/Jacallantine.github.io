@@ -104,15 +104,15 @@ export const projects = [
 export const experience = [
   {
     company: "FastHealth Corporation",
-    role: "Fullstack Developer",
-    period: "Feb 2025 — Present",
+    role: "Fullstack Developer - Part time",
+    period: "Feb 2025 — Oct 2, 2026",
     type: "Part time",
     description:
-      "Building responsive hospital websites, modernizing internal CMS workflows, and developing FastCommand Weather, a cross-platform mobile app for location-aware weather updates.",
+      "Built responsive hospital websites, modernized internal CMS workflows, and developed FastCommand Weather, a cross-platform mobile app for location-aware weather updates.",
   },
   {
     company: "Embrace Alabama Kids",
-    role: "Data Analyst / Fullstack Developer",
+    role: "Data Analyst / Fullstack Developer - Part time",
     period: "Aug 2025 — Oct 1, 2026",
     type: "Part time",
     description:
